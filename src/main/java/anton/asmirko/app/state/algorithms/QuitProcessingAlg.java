@@ -8,12 +8,12 @@ import org.springframework.stereotype.Component;
 
 @Component(QuitCommand.STR_REP)
 @RequiredArgsConstructor
-public class DummyProcessingAlg implements CLICommandProcessingAlg<QuitCommand> {
+public class QuitProcessingAlg implements CLICommandProcessingAlg<QuitCommand> {
 
-    private final AppState appState;
+  private final AppState appState;
 
-    @Override
-    public FsmState process(QuitCommand cliCommand) {
-        return appState.getFsmState();
-    }
+  @Override
+  public FsmState process(QuitCommand cliCommand) {
+    return appState.getFsmState();
+  }
 }

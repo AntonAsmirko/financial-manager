@@ -1,4 +1,8 @@
 package anton.asmirko.app.model.fsm;
 
-public interface FsmState {
+import anton.asmirko.app.model.commands.CLICommand;
+
+public sealed interface FsmState permits AuthState, WorkingState {
+
+  boolean acceptsCommand(CLICommand cliCommand);
 }

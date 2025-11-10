@@ -1,4 +1,19 @@
 package anton.asmirko.app.model.transaction.list;
 
-public class ListTransactionQueryOutcomingDecorator {
+import anton.asmirko.app.model.transaction.OutcomingTransaction;
+import anton.asmirko.app.model.transaction.Transaction;
+import java.util.List;
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
+public class ListTransactionQueryOutcomingDecorator extends ListTransactionQuery {
+
+  private final ListTransactionQuery decoratedQuery;
+
+  @Override
+  public List<Transaction> execute() {
+    return decoratedQuery.execute().stream()
+        .filter(it -> it instanceof OutcomingTransaction)
+        .toList();
+  }
 }
