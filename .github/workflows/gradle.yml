@@ -37,6 +37,8 @@ jobs:
       run: ./gradlew dependencies --refresh-dependencies
     - name: Build with Gradle Wrapper
       run: ./gradlew build
+    - name: Run tests
+      run: ./gradlew test
     - name: Check style
       run: ./gradlew :spotlessCheck
     - name: FatJar
