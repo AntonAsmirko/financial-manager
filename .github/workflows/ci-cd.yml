@@ -45,7 +45,7 @@ jobs:
 
       - name: SCA - OWASP Dependency-Check
         if: matrix.os == 'ubuntu-latest'
-        run: ./gradlew dependencyCheckAnalyze -DnvdApiKey="$NVD_API_KEY" --rerun-tasks
+        run: ./gradlew dependencyCheckAnalyze --rerun-tasks -DdependencyCheck.nvd.apiKey="${NVD_API_KEY}"
         shell: bash
 
       - name: FatJar
