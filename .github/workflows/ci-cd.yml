@@ -12,6 +12,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     env:
       JAVA_TOOL_OPTIONS: -Dfile.encoding=UTF-8
+      NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
     strategy:
       fail-fast: false
       matrix:
@@ -42,6 +43,11 @@ jobs:
         run: ./gradlew spotlessCheck
         shell: bash
 
+      - name: SCA - OWASP Dependency-Check
+        if: matrix.os == 'ubuntu-latest'
+        run: ./gradlew dependencyCheckAnalyze -DnvdApiKey="$NVD_API_KEY" --rerun-tasks
+        shell: bash
+
       - name: FatJar
         run: ./gradlew fatJar
         shell: bash
@@ -62,6 +68,17 @@ jobs:
           name: app-jar
           path: |
             build/libs/*.jar
+            
+      - name: Upload Dependency-Check report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dependency-check-report-${{ matrix.os }}
+          path: |
+            build/reports/dependency-check-report.html
+            build/reports/dependency-check-report.json
+            build/reports/dependency-check-report.xml
+          if-no-files-found: warn
 
   deploy:
     name: Deploy (SSH)
