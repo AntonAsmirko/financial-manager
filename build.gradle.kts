@@ -1,6 +1,7 @@
 plugins {
     id("java")
     id("com.diffplug.spotless") version "6.25.0"
+    id("org.owasp.dependencycheck") version "12.1.9"
 }
 
 group = "anton.asmirko"
@@ -36,6 +37,10 @@ spotless {
         trimTrailingWhitespace()
         endWithNewline()
     }
+}
+
+dependencyCheck {
+    failBuildOnCVSS = 11f
 }
 
 tasks.register<Jar>("fatJar") {
