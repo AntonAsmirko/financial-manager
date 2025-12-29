@@ -41,6 +41,9 @@ spotless {
 
 dependencyCheck {
     failBuildOnCVSS = 11f
+    nvd {
+        apiKey = System.getenv("NVD_API_KEY")
+    }
 }
 
 tasks.register<Jar>("fatJar") {
